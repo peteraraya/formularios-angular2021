@@ -1,0 +1,118 @@
+<h2>Template Básicos</h2>
+
+<hr>
+
+<div class="row">
+  <div class="col">
+
+    <form (ngSubmit)="guardar()" 
+          #miFormulario="ngForm"
+          autocomplete="off"
+          >
+      <!-- campo de producto -->
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Producto</label>
+        <div col="col-sm-9">
+          <input 
+              class="form-control" 
+              type="text" 
+              [ngModel]="initForm.producto"
+              name="producto"
+              placeholder="Nombre del producto"
+              required
+              minlength="3"
+              >
+            <span  *ngIf="nombreValido()"
+                class="form-text text-danger">
+                Debe de ser de 3 letras
+            </span>
+        </div>
+      </div>
+      <!-- campo de Precio -->
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Precio</label>
+        <div col="col-sm-9">
+          <input class="form-control" 
+                 type="number" 
+                 [ngModel]="initForm.precio"
+                 name="precio"
+                 placeholder="Nombre del producto"
+                 >
+            <span  *ngIf="precioValido()"
+                class="form-text text-danger">
+                El precio debe ser 0 o mayor
+            </span>
+        </div>
+      </div>
+      <!-- campo de Existencias -->
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Existencias</label>
+        <div col="col-sm-9">
+          <input class="form-control" 
+                 type="number"
+                 [ngModel]="initForm.existencias"
+                 name="existencias" 
+                 customMin
+                 [minimo]="0"
+                 placeholder="Existencias del producto"
+                 required
+                 >
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <button 
+              class="btn btn-primary float-end" 
+              [disabled]="miFormulario.invalid"
+              type="submit"
+              >
+            Guardar
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+
+<div class="row">
+  <div class="col">
+    <span>Valid</span>
+    <pre  [ngClass]="{  
+                      'text-success':  miFormulario.valid,
+                      'text-danger' : !miFormulario.valid
+                     }">
+      {{ miFormulario.valid }}
+    </pre>
+    <span>Pristine</span>
+    <pre  [ngClass]="{  
+                      'text-success':  miFormulario.pristine,
+                      'text-danger' : !miFormulario.pristine
+                     }">
+      {{ miFormulario.pristine }}
+    </pre>
+    <span>Touched</span>
+    <pre  [ngClass]="{  
+                      'text-success':  miFormulario.touched,
+                      'text-danger' : !miFormulario.touched
+                     }">
+      {{ miFormulario.touched }}
+    </pre>
+
+    <span>Value</span>
+    <pre>{{ miFormulario.value | json }}</pre>
+
+    <span>Custom Directive</span>
+    <pre>{{ miFormulario.controls.existencias?.errors | json }}</pre>
+  </div>
+</div>
+
+<!-- 
+  Pristine :  significa que no se han cambiado ninguno de sus valores internos
+  Touched  :  si el usuario ha tocado el formulario, aunque no modifique valores
+
+
+ -->
