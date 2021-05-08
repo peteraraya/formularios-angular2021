@@ -4,7 +4,7 @@
 
 <div class="row">
   <div class="col">
-    <form autocomplete="off" [formGroup]="miFormulario">
+    <form (ngSubmit)="guardar()"  autocomplete="off" [formGroup]="miFormulario">
       <!-- campo de producto -->
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Producto</label>

@@ -2,17 +2,19 @@
 
 <hr />
 
-<form autocomplete="off">
+<form (ngSubmit)="guardar()" autocomplete="off" [formGroup]="miFormulario">
   <!-- Nombre  -->
   <div class="row mb-3">
-    <label class="col-sm-3 col-form-label">Nommbre</label>
+    <label class="col-sm-3 col-form-label">Nombre</label>
     <div class="col-sm-9">
       <input
         type="text"
         class="form-control"
+        formControlName="nombre"
         placeholder="Nombre de la persona"
       />
       <span
+        *ngIf="campoEsValido('nombre')"
         class="form-text text-danger"
       >
         Debe de ser de 3 letras
@@ -26,14 +28,15 @@
       <div class="input-group mb-3">
         <input
           class="form-control"
+          [formControl]="nuevoFavorito"
           placeholder="Agregar juego favorito"
-          (keyup.enter)="true"
+          (keyup.enter)="agregarFavorito()"
           type="text"
 
         />
         <button 
           class="btn btn-outline-primary" 
-          (click)="true"
+          (click)="agregarFavorito()"
           type="button">
           Agregar
         </button>
@@ -41,25 +44,26 @@
     </div>
   </div>
 
-  <!-- Lista de Juegos Fvoritos  -->
+  <!-- Lista de Juegos Favoritos  -->
   <div class="row mb-3">
     <label class="col-sm-3 col-form-label">Favoritos</label>
-    <div class="col-sm-9">
-      <!-- <div
-        *ngFor="let juego of persona.favoritos; let i = index"
-        class="input-group mb-1"
+    <div class="col-sm-9" formArrayName="favoritos">
+      <div
+      class="input-group mb-1"
+        *ngFor="let favorito of favoritosArr.controls ; let i = index"
       >
-        <input          class="form-control"
-          type="text"
+        <input class="form-control"
+               type="text"
+              [formControlName]="i"
         />
         <button 
           type="button" 
-          class="btn btn-danger" 
-          (click)="a=1"
+          class="btn btn-danger"
+          (click)="borrar(i)" 
           >
           Eliminar
         </button>
-      </div> -->
+      </div>
     </div>
   </div>
 
@@ -67,7 +71,8 @@
     <div class="col-sm-12">
       <button
         type="button"
-        (click)="true"
+        [disabled]="miFormulario.invalid"
+        (click)="guardar()"
         class="btn btn-primary float-end"
       >
         Guardar
@@ -76,9 +81,52 @@
   </div>
 </form>
 
-<!-- <span>Persona</span>
+<!-- 
+<span>Persona</span>
 <pre>
-  {{ persona | json }}
+  {{ nombre | json }}
 </pre> -->
 
-<!-- [(nhModel)]  : permite emitir el cambio del formulario  -->
+<div class="row">
+  <div class="col">
+    <span>Valid</span>
+    <pre
+      [ngClass]="{
+        'text-success': miFormulario.valid,
+        'text-danger': !miFormulario.valid
+      }"
+    >
+      {{ miFormulario.valid }}
+    </pre>
+    <span>Pristine</span>
+    <pre
+      [ngClass]="{
+        'text-success': miFormulario.pristine,
+        'text-danger': !miFormulario.pristine
+      }"
+    >
+      {{ miFormulario.pristine }}
+    </pre>
+    <span>Touched</span>
+    <pre
+      [ngClass]="{
+        'text-success': miFormulario.touched,
+        'text-danger': !miFormulario.touched
+      }"
+    >
+      {{ miFormulario.touched }}
+    </pre>
+
+    <span>Value</span>
+    <pre>{{ miFormulario.value | json }}</pre>
+
+    <span>Agregar Juego</span>
+    <pre>{{ nuevoFavorito.valid | json }}</pre>
+    <pre>{{ nuevoFavorito.value | json }}</pre>
+
+  </div>
+</div>
+
+
+
+<!-- [(ngModel)]  : permite emitir el cambio del formulario  -->

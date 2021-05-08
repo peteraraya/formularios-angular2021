@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -7,7 +7,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
   styles: [
   ]
 })
-export class BasicosComponent {
+export class BasicosComponent implements OnInit {
   
   // Estableciendo controles forma normal
   // miFormulario: FormGroup = new FormGroup({
@@ -25,10 +25,31 @@ export class BasicosComponent {
   });
   constructor( private fb: FormBuilder) { }
 
+
+  ngOnInit(){
+    // para establecer valores al formulario utilizo el reset
+    this.miFormulario.reset({
+      nombre: 'RTX 4080TI',
+      precio: 10000,
+    });
+
+  }
+
+
   campoEsValido( campo: string){
     return this.miFormulario.controls[campo].errors && 
            this.miFormulario.controls[campo].touched
   }
 
+  guardar(){
+    console.log(this.miFormulario.value);
+    if (this.miFormulario.invalid) {
+      // para que aparezcan los errores después de haber tocados los campos
+      this.miFormulario.markAllAsTouched();
+      return;
+    }
+
+    this.miFormulario.reset();
+  }
 
 }

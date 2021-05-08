@@ -2,7 +2,7 @@
 
 <hr />
 
-<form>
+<form [formGroup]="miFormulario" (ngSubmit)="guardar()" >
   <!--  Radios -->
   <div class="row mb-3">
     <label class="col-sm-3 form-label">Género </label>
@@ -10,9 +10,9 @@
       <div class="form-check">
         <input
           class="form-check-input"
+          formControlName="genero"
           type="radio"
           value="M"
-          name="radioGenero"
           id="flexRadioDefault1"
         />
         <label class="form-check-label" for="flexRadioDefault1">
@@ -22,6 +22,7 @@
       <div class="form-check">
         <input
           class="form-check-input"
+          formControlName="genero"
           type="radio"
           value="F"
           id="flexRadioDefault2"
@@ -40,6 +41,7 @@
       <div class="form-check form-switch">
         <input
           class="form-check-input"
+          formControlName="notificaciones"
           type="checkbox"
           id="flexSwitchCheckChecked"
         />
@@ -50,16 +52,16 @@
     </div>
   </div>
 
-  <!--  Checks -->
+  <!--  Checks Términos y Condiciones-->
   <div class="row mb-3">
     <label class="col-sm-3 col-form-label"></label>
     <div class="col-sm-9">
       <div class="form-check">
         <input
           class="form-check-input"
+          formControlName="condiciones"
           type="checkbox"
           id="flexCheckDefault"
-          required
         />
         <label class="form-check-label" for="flexCheckDefault">
           Términos y condiciones
@@ -72,6 +74,7 @@
   <div class="row">
     <div class="col">
       <button
+        type="submit"
         class="btn btn-primary float-end"
       >
         Guardar
@@ -80,7 +83,7 @@
   </div>
 </form>
 
-<!-- <h5>valor del formulario</h5>
+<h5>valor del formulario</h5>
 
 <pre>
   {{ miFormulario.value | json }}
@@ -101,7 +104,7 @@
 </pre>
 
 <br />
-<h5>Términos</h5>
+<!-- <h5>Términos</h5>
 <pre>
   {{ miFormulario.controls?.terminos?.errors | json }}
 </pre>
@@ -110,8 +113,10 @@
 <h5>Condiciones</h5>
 <pre>
   Condiciones :
-</pre> -->
+</pre>  -->
 
 <!-- los name deben ser iguales  -->
 
 <!-- Los switches no son másque chekboxes con estilo swtiches -->
+
+<!-- Cuando solo tenemos un boton en el formulario se recomienda utilizar type="submit" -->
